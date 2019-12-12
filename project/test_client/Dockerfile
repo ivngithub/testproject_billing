@@ -1,0 +1,6 @@
+FROM debian:stretch
+
+WORKDIR /project
+COPY / /project
+
+RUN apt-get update && apt-get install -y freeradius telnet htop

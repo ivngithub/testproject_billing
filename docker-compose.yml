@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  freeradius:
+    build: project/freeradius
+    image: freeraduis
+    container_name: freeradius_container
+    ports:
+     - "1812:1812/udp"
+     - "1813:1813"
+
+  mysql:
+    build: project/mysql
+    container_name: mysql_container
+    volumes:
+      - .:/project
+    ports:
+      - "3306:3306"
+
+  client:
+    build: project/test_client
+    container_name: client_container
+    volumes:
+      - .:/project
+    tty: True
