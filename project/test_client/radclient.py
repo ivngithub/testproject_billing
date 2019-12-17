@@ -24,16 +24,13 @@ class RadUser:
         self.user=user
         self.server = self._set_server()
 
-    # srv = Client(server="freeradius", secret=b"testing123", dict=Dictionary("dictionary"))
     def _set_server(self):
         return Client(server=self.server_name, secret=self.server_secret, dict=Dictionary(self.dictionary_file))
 
-    # req = srv.CreateAuthPacket(code=pyrad.packet.AccessRequest, User_Name="fredf", NAS_Identifier="localhost")
     def _create_request_auth_packet(self):
         request = self.server.CreateAuthPacket(code=pyrad.packet.AccessRequest,
                                                User_Name=self.user.name,
                                                NAS_Identifier=self.NAS_Identifier)
-
         request["User-Password"] = request.PwCrypt(self.user.password)
 
         return request
@@ -55,7 +52,6 @@ class RadUser:
 
         return request
 
-    # response = self.server.SendPacket(req)
     def request(self, type_request=None):
         if type_request:
             return self.server.SendPacket(self._create_request_acct_packet(type_request))
@@ -75,6 +71,7 @@ def view_result(client):
     print("Attributes returned by server:")
     for i in result.keys():
         print('{}: {}'.format(i, result[i]))
+
 
 
 user_bad = RadUser(user=User(name='fr', password='wilm', session_id='0000-Q-890'))
